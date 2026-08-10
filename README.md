@@ -5,3 +5,6 @@ the list of characters (and maybe games) will be updated randomly! apologies!
 these guides will be quick and simple guides for every character in
 roles that they can fit in. these guides will be short, more so for
 new players wanting a quick synopsis of what a character can do!
+
+made by Juan Ynigo R. Libiran
+BSCS - 2B1
