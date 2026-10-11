@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Impact | My Profile</title>
+    <link rel="stylesheet" href="ProfileStyle.css">
+</head>
+<body>
+<header>
+  <h1><a href="Home.html">Guide Impact</a></h1>
+  <a href="Home.html">Back to Home</a>
+</header>
+
+<main>
+  <section class="profile-card">
+    <div class="avatar" id="avatar" aria-hidden="true">?</div>
+    <h2 id="profileHeading">My Profile</h2>
+    <p class="hint">Add a short description about yourself. Your description is saved in this browser for this account.</p>
+
+    <form id="profileForm">
+      <label for="description">About me</label>
+      <textarea id="description" name="description" maxlength="1000" placeholder="Tell others a little about yourself, your favorite games, or the characters you enjoy."></textarea>
+      <p class="hint"><span id="charCount">0</span>/1000 characters</p>
+      <button type="submit">Save Description</button>
+      <a class="back-link" href="Home.html">Cancel</a>
+      <p id="status" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+</main>
+
+<script>
+  const username = sessionStorage.getItem("charactersSimplifiedLoggedInUser");
+
+  // Only a logged-in user can open this page.
+  if (!username) {
+    alert("Please log in to access your profile.");
+    window.location.replace("LogIn.html");
+  } else {
+    const form = document.getElementById("profileForm");
+    const descriptionInput = document.getElementById("description");
+    const heading = document.getElementById("profileHeading");
+    const avatar = document.getElementById("avatar");
+    const status = document.getElementById("status");
+    const charCount = document.getElementById("charCount");
+    const profileStorageKey = "guideImpactProfile_" + username;
+
+    heading.textContent = username + "'s Profile";
+    avatar.textContent = username.trim().charAt(0).toUpperCase() || "?";
+
+    const savedProfile = localStorage.getItem(profileStorageKey);
+    if (savedProfile) {
+      try {
+        const profile = JSON.parse(savedProfile);
+        descriptionInput.value = typeof profile.description === "string" ? profile.description : "";
+      } catch {
+        descriptionInput.value = "";
+      }
+    }
+
+    charCount.textContent = descriptionInput.value.length;
+    descriptionInput.addEventListener("input", function () {
+      charCount.textContent = descriptionInput.value.length;
+    });
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      localStorage.setItem(profileStorageKey, JSON.stringify({
+        username: username,
+        description: descriptionInput.value.trim()
+      }));
+      status.textContent = "Your profile description has been saved.";
+    });
+  }
+</script>
+</body>
+</html>
