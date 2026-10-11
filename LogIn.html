@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="stylesheet" href="LogInStyle.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Characters Simplified | Log In</title>
@@ -19,6 +20,9 @@
 <p id="message" role="status" aria-live="polite"></p>
 </form>
 <p>Don't have an account? <a href="Registration.html">Create one</a></p>
+<button type="button" onclick="resetAccount()">
+    Reset Account
+</button>
 </main>
 <script>
 const loginForm = document.getElementById("loginForm");
@@ -60,6 +64,17 @@ const rememberedUsername = localStorage.getItem("charactersSimplifiedRememberedU
 if (rememberedUsername) {
   document.getElementById("Username").value = rememberedUsername;
   document.getElementById("remember").checked = true;
+}
+
+function resetAccount() {
+    if (confirm("Are you sure you want to delete the saved account?")) {
+        localStorage.removeItem("charactersSimplifiedAccount");
+        sessionStorage.removeItem("charactersSimplifiedLoggedInUser");
+        localStorage.removeItem("charactersSimplifiedRememberedUsername");
+
+        alert("Account reset. You can now register a new account.");
+        window.location.href = "Registration.html";
+    }
 }
 </script>
 </body>

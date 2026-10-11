@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="LogInStyle.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide Impact | Home</title>
+</head>
+<body>
+<header>
+  <h1><a href="Landing.html">Guide Impact</a></h1>
+  <nav aria-label="Main navigation">
+    <a href="GenshinCharacters.html">Characters</a>
+    <a href="GenshinTerms.html">Game Terms</a>
+    <a id="profileLink" href="Profile.html" hidden>My Profile</a>
+    <a id="loginLink" href="LogIn.html" hidden>Log In</a>
+    <button id="logoutButton" type="button" hidden>Log Out</button>
+  </nav>
+</header>
+
+<main>
+  <section class="welcome">
+    <h2>Character Guides</h2>
+    <p id="accountMessage" class="muted">Read about characters, team building, and game mechanics.</p>
+  </section>
+
+  <section class="guide-card">
+    <h2>Characters</h2>
+    <p>Read about characters like Amber, Yelan, and Lauma, and learn how they work in teams for combat!</p>
+    <a class="guide-link" href="GenshinCharacters.html">Browse Characters</a>
+  </section>
+
+  <section class="guide-card">
+    <h2>Game Terms</h2>
+    <p>Learn about Swirl, Elemental Mastery (EM), Bloom, and many other terms you might come across in character guides.</p>
+    <a class="guide-link" href="GenshinTerms.html">Browse Game Terms</a>
+  </section>
+</main>
+
+<script>
+  // This matches the session key used by LogIn.html.
+  const loggedInUser = sessionStorage.getItem("charactersSimplifiedLoggedInUser");
+  const profileLink = document.getElementById("profileLink");
+  const loginLink = document.getElementById("loginLink");
+  const logoutButton = document.getElementById("logoutButton");
+  const accountMessage = document.getElementById("accountMessage");
+
+  if (loggedInUser) {
+    profileLink.hidden = false;
+    logoutButton.hidden = false;
+    accountMessage.textContent = `Welcome, ${loggedInUser}! You can open My Profile to add or edit your description.`;
+  } else {
+    loginLink.hidden = false;
+    accountMessage.textContent = "Log in to access your profile, or browse the character guides below.";
+  }
+
+  logoutButton.addEventListener("click", function () {
+    sessionStorage.removeItem("charactersSimplifiedLoggedInUser");
+    window.location.href = "Home.html";
+  });
+</script>
+</body>
+</html>
