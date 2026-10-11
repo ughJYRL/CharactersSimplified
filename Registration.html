@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Characters Simplified | Registration</title>
+</head>
+<body>
+<header><h1>Characters Simplified Registration</h1></header>
+<main>
+<p>Register an account for Characters Simplified!</p>
+<form id="registrationForm">
+<label for="Username">Create a Username</label><br>
+<input type="text" id="Username" name="Username" autocomplete="username" required minlength="3"><br><br>
+<label for="Password">Create a Password</label><br>
+<input type="password" id="Password" name="Password" autocomplete="new-password" required minlength="6"><br><br>
+<label for="ConfirmPassword">Confirm the Password</label><br>
+<input type="password" id="ConfirmPassword" name="ConfirmPassword" autocomplete="new-password" required minlength="6"><br><br>
+<button type="submit">Create Account</button>
+<p id="message" role="status" aria-live="polite"></p>
+</form>
+<p>Already have an account? <a href="LogIn.html">Log In</a></p>
+</main>
+<script>
+const registrationForm = document.getElementById("registrationForm");
+const message = document.getElementById("message");
+
+registrationForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+  const username = document.getElementById("Username").value.trim();
+  const password = document.getElementById("Password").value;
+  const confirmPassword = document.getElementById("ConfirmPassword").value;
+
+  if (username.length < 3) {
+    message.textContent = "Username must be at least 3 characters long.";
+    return;
+  }
+  if (password.length < 6) {
+    message.textContent = "Password must be at least 6 characters long.";
+    return;
+  }
+  if (password !== confirmPassword) {
+    message.textContent = "Passwords do not match. Please check them and try again.";
+    return;
+  }
+
+  // Demo only: stores one account in this browser, not on a secure server.
+  localStorage.setItem("charactersSimplifiedAccount",
+    JSON.stringify({ username: username, password: password }));
+
+  message.textContent = "Account created successfully! Redirecting to Log In...";
+  registrationForm.reset();
+  window.location.href = "LogIn.html";
+});
+</script>
+</body>
+</html>

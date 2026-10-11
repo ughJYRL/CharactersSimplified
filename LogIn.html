@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Characters Simplified | Log In</title>
+</head>
+<body>
+<header><h1>Characters Simplified Log In</h1></header>
+<main>
+<p>Log in to enter Characters Simplified</p>
+<form id="loginForm">
+<label for="Username">Enter a Username</label><br>
+<input type="text" id="Username" name="Username" autocomplete="username" required><br><br>
+<label for="Password">Enter a Password</label><br>
+<input type="password" id="Password" name="Password" autocomplete="current-password" required><br><br>
+<label><input type="checkbox" id="remember" name="remember"> Remember me</label><br><br>
+<button type="submit">Log In</button>
+<p id="message" role="status" aria-live="polite"></p>
+</form>
+<p>Don't have an account? <a href="Registration.html">Create one</a></p>
+</main>
+<script>
+const loginForm = document.getElementById("loginForm");
+const message = document.getElementById("message");
+
+loginForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+  const username = document.getElementById("Username").value.trim();
+  const password = document.getElementById("Password").value;
+  const savedAccount = localStorage.getItem("charactersSimplifiedAccount");
+
+  if (!savedAccount) {
+    message.textContent = "No account found. Please register first.";
+    return;
+  }
+
+  let account;
+  try {
+    account = JSON.parse(savedAccount);
+  } catch {
+    message.textContent = "Saved account data could not be read. Please register again.";
+    return;
+  }
+
+  if (username === account.username && password === account.password) {
+    if (document.getElementById("remember").checked) {
+      localStorage.setItem("charactersSimplifiedRememberedUsername", username);
+    } else {
+      localStorage.removeItem("charactersSimplifiedRememberedUsername");
+    }
+    sessionStorage.setItem("charactersSimplifiedLoggedInUser", username);
+    window.location.href = "Landing.html";
+  } else {
+    message.textContent = "Incorrect username or password. Please try again.";
+  }
+});
+
+const rememberedUsername = localStorage.getItem("charactersSimplifiedRememberedUsername");
+if (rememberedUsername) {
+  document.getElementById("Username").value = rememberedUsername;
+  document.getElementById("remember").checked = true;
+}
+</script>
+</body>
+</html>
